@@ -1,4 +1,4 @@
-from sqlalchemy import Column, BigInteger, DateTime, func, String, ForeignKey
+from sqlalchemy import Column, BigInteger, DateTime, func, String, Integer, BINARY
 from sqlalchemy.orm import Session
 
 from wfse.app.database import conn
@@ -46,7 +46,36 @@ class Feelings(conn.Base, BaseMixin):
     feeling = Column(String(length=20), nullable=False)
 
 
-class Feelings_log(conn.Base, BaseMixin):
+class FellingComments(conn.Base, BaseMixin):
+    __tablename__ = 'felling_comments'
+    parent_id = Column(BigInteger, nullable=False)
+    feeling_id = Column(BigInteger, nullable=False)
+    reference_datetime = Column(DateTime, nullable=False)
+    temp_id = Column(String(length=50), nullable=False)
+    temp_pw = Column(String(length=50), nullable=False)
+    comment = Column(String(length=2048), nullable=False)
+
+
+class IPs(conn.Base, BaseMixin):
+    __tablename__ = 'ips'
+    ipv4 = Column(Integer, nullable=True, signed=True)
+    ipv6 = Column(BINARY(length=16), nullable=True)
+
+
+class Reactions(conn.Base, BaseMixin):
+    __tablename__ = 'reactions'
+    reaction = Column(String(20), nullable=False)
+
+
+class FellingCommentReactions(conn.Base, BaseMixin):
+    __tablename__ = 'felling_comment_reactions'
+    ip_id = Column(BigInteger, nullable=False)
+    comment_id =  Column(BigInteger, nullable=False)
+    reaction_id =  Column(BigInteger, nullable=False)
+
+
+# Log
+class FeelingsLog(conn.Base, BaseMixin):
     __tablename__ = 'feelings_log'
-    ip = Column(String(length=50), nullable=False)
+    ip_id = Column(BigInteger, nullable=False)
     feelings_id = Column(BigInteger, nullable=False, ForeignKey=True)
