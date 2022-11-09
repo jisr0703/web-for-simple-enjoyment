@@ -6,8 +6,8 @@ from wfse.app.database import conn
 
 class BaseMixin:
     id = Column(BigInteger, primary_key=True, index=True)
-    created_at = Column(DateTime, nullable=True, default=func.utc_timestamp())
-    updated_at = Column(DateTime, nullable=True, default=func.utc_timestamp())
+    create_at = Column(DateTime, nullable=True, default=func.utc_timestamp())
+    update_at = Column(DateTime, nullable=True, default=func.utc_timestamp())
 
     def all_columns(self):
         return [c for c in self.__table__.columns if c.primary_key is False and c.name != 'created_at']
@@ -16,7 +16,7 @@ class BaseMixin:
         return hash(self.id)
 
     @classmethod
-    def create(cls, session: Session, auto_commit:bool = False, **kwargs):
+    def create(cls, session: Session, auto_commit: bool = False, **kwargs):
         obj = cls()
         for col in obj.all_columns():
             col_name = col.name
@@ -58,8 +58,9 @@ class FellingComments(conn.Base, BaseMixin):
 
 class IPs(conn.Base, BaseMixin):
     __tablename__ = 'ips'
-    ipv4 = Column(Integer, nullable=True, signed=True)
-    ipv6 = Column(BINARY(length=16), nullable=True)
+    ip = Column(String(length=50), nullable=False)
+    # ipv4 = Column(Integer, nullable=True, signed=True)
+    # ipv6 = Column(BINARY(length=16), nullable=True)
 
 
 class Reactions(conn.Base, BaseMixin):
@@ -78,4 +79,5 @@ class FellingCommentReactions(conn.Base, BaseMixin):
 class FeelingsLog(conn.Base, BaseMixin):
     __tablename__ = 'feelings_log'
     ip_id = Column(BigInteger, nullable=False)
-    feelings_id = Column(BigInteger, nullable=False, ForeignKey=True)
+    feelings_id = Column(BigInteger, nullable=False)
+    # feelings_id = Column(BigInteger, nullable=False, ForeignKey=True)
