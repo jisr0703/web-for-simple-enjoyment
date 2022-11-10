@@ -10,7 +10,7 @@ class BaseMixin:
     update_at = Column(DateTime, nullable=True, default=func.utc_timestamp())
 
     def all_columns(self):
-        return [c for c in self.__table__.columns if c.primary_key is False and c.name != 'created_at']
+        return [c for c in self.__table__.columns if c.primary_key is False and c.name != 'create_at']
 
     def __hash__(self):
         return hash(self.id)
@@ -79,5 +79,5 @@ class FellingCommentReactions(conn.Base, BaseMixin):
 class FeelingsLog(conn.Base, BaseMixin):
     __tablename__ = 'feelings_log'
     ip_id = Column(BigInteger, nullable=False)
-    feelings_id = Column(BigInteger, nullable=False)
+    feeling_id = Column(BigInteger, nullable=False)
     # feelings_id = Column(BigInteger, nullable=False, ForeignKey=True)
