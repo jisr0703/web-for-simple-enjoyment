@@ -28,7 +28,8 @@ class SQLAlchemy:
 
         self._engine = create_engine(
             database_url,
-            echo=echo,
+            # echo=echo,
+            echo=False,
             pool_recycle=pool_recycle,
             pool_pre_ping=True
         )
