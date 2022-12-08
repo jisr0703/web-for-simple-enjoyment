@@ -28,7 +28,7 @@ def test_fortune_checking():
     response_body = response.json()
     print(f'{response_body}')
     assert response.status_code == 200
-    assert response.json() == {'message': 'here is fortune checking'}
+    assert response.json() == {'hi': 'here is fortune checking'}
 
 
 def test_fortune_checking_testing():

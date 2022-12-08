@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 from dataclasses import asdict
 
-from wfse.app.routes import index, fortune
+from wfse.app.routes import index, fortune, auth
 from wfse.app.common import config
 from wfse.app.database import conn
 
@@ -15,6 +15,7 @@ def create_app():
 
     app.include_router(index.router)
     app.include_router(fortune.router, tags=['fortune'], prefix='/fortune')
+    app.include_router(auth.router, tags=['oauth'], prefix='/oauth')
 
     return app
 
